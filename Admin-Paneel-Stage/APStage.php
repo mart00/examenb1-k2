@@ -86,12 +86,14 @@ include("APStageBackend.php");
     //     echo $row['slbMail']. "<br>";
     //   }
     // }
+
     if ($query->num_rows > 0) {
-    echo "<table><tr><th>Voornaam</th><th>geboorte Datum</th><th>Straat</th><th>Stad</th><th>Postcode</th><th>Telefoon</th></tr>";
+    echo '<form method="POST" class="col-lg-9 mx-auto">';
+
     // output data of each row
     while($row = $query->fetch_assoc()) {
-
-        echo "<tr><td>" . $row["voornaam"]. "</td><td>" . $row["geboorteDatum"]. " </td><td>" . $row["straat"]. "</td></tr>";
+        echo '<div class="form-row col-md-4">' . '<label for="username">' .$row["voornaam"]. '</label>' .;
+        // echo '<div class="form-row col-md-4">' . "<label for="username">".$row["voornaam"]."</label> " . $row["geboorteDatum"]. " </td><td>" . $row["straat"]. "</td></tr>";
     }
     echo "</table>";
     } else {
