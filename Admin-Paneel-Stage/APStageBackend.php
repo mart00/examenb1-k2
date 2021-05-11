@@ -23,6 +23,16 @@ if(isset($_POST['submit'])){
     } else {
       session_start();
       $_SESSION["loggedin"] = TRUE;
-      header("Location: APSTAGE.php");
+      header("Location: APstage.php");
+    }
+}
+if(isset($_POST['aanpassen'])){
+    $id = $_GET['id'];
+    $tel = mysqli_real_escape_string($con,$_POST['tel']);
+    $sql = "UPDATE stagiaires set telefoonnummer = '".$tel."' WHERE id = '".$id."' ";
+  if (mysqli_query($con,$sql)) {
+      echo "string";
+    } else{
+       echo "Error updating record: " . $con->error;
     }
 }

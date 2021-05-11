@@ -61,56 +61,69 @@ include("APStageBackend.php");
         <!-- Dit is het formulier zelf, dus waar je alles invult in de browser -->
     <section>
 
-<form method="POST" class="col-lg-9 mx-auto" id="MainForm" action="BackEnd-Stage.php?id=<?= $a ?>&send=nee">
   <h1 class="mx-auto">Admin paneel stagiaires login</h1>
 
 <?php
-    $query = mysqli_query($con,"SELECT * FROM formdata2");
+    $query = mysqli_query($con,"SELECT * FROM stagiaires");
     $check = mysqli_num_rows($query);
 
-    // if($check > 0 ){
-    //   while ($row = mysqli_fetch_assoc($query)) {
-    //     echo $row['voornaam']. "<br>";
-    //     echo $row['geboorteDatum']. "<br>";
-    //     echo $row['straat'] . "<br>";
-    //     echo $row['stad']. "<br>";
-    //     echo $row['postcode']. "<br>";
-    //     echo $row['telefoon']. "<br>";
-    //     echo $row['email']. "<br>";
-    //     echo $row['school']. "<br>";
-    //     echo $row['opleiding']. "<br>";
-    //     echo $row['niveau']. "<br>";
-    //     echo $row['stagejaar']. "<br>";
-    //     echo $row['slber']. "<br>";
-    //     echo $row['slbTelefoon']. "<br>";
-    //     echo $row['slbMail']. "<br>";
-    //   }
-    // }
-
     if ($query->num_rows > 0) {
-    echo '<form method="POST" class="col-lg-9 mx-auto">';
+    echo '<table class="table table-sm table-dark table-bordered table-hover" style="width : 100%" > <thead>
+    <tr>
+      <th scope="col">Voornaam</th>
+      <th scope="col">Achternaam</th>
+      <th scope="col">Geboorte Datum</th>
+      <th scope="col">Straat</th>
+      <th scope="col">Stad</th>
+      <th scope="col">Postcode</th>
+      <th scope="col">Telefoon</th>
+      <th scope="col">Email</th>
+      <th scope="col">Opleiding</th>
+      <th scope="col">Niveau</th>
+      <th scope="col">Leerjaar</th>
+      <th scope="col">School</th>
+      <th scope="col">Slb-er</th>
+      <th scope="col">Slb Email</th>
+      <th scope="col">Slb Telefoon</th>
+      <th scope="col">DELETE DATA</th>
+      <th scope="col">CHANGE DATA</th>
+    </tr>
+  </thead> <tbody>';
 
     // output data of each row
     while($row = $query->fetch_assoc()) {
-        echo '<div class="form-row col-md-4">' . '<label for="username">' .$row["voornaam"]. '</label>' .;
-        // echo '<div class="form-row col-md-4">' . "<label for="username">".$row["voornaam"]."</label> " . $row["geboorteDatum"]. " </td><td>" . $row["straat"]. "</td></tr>";
-    }
+        echo '<tr>
+            <th scope="row"> '.$row["voornaam"].' </th><td>' .$row["achternaam"]. '</td> <td>'.$row["geboortedatum"].'</td> <td>'.$row["straat"].'</td>
+            <td>'.$row["stad"].'</td> <td>'.$row["postcode"].'</td> <td>'.$row["telefoonnummer"].'</td> <td>'.$row["email"].'</td> <td>'.$row["opleiding"].'</td>
+            <td>'.$row["niveau"].'</td> <td>'.$row["leerjaar"].'</td> <td>'.$row["school"].'</td> <td>'.$row["SLBer"].'</td> <td>'.$row["SLBer-tel"].'</td> <td>'.$row["SLBer-email"].'</td>
+            <form action="APStage.php?id='.$row["ID"].'" method="post">
+              <td><input type="submit" name="Delete" value="Danger" class="btn btn-danger" /></td>
+            </form>
+            <form action="APStageChange.php?id='.$row["ID"].'" method="post">
+              <td><input type="submit" name="Change" value="Change"class="btn btn-info" /></td>
+            </form>
+          </tr>';
+            }
+
     echo "</table>";
     } else {
     echo "0 results";
     }
+    if($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['Delete'])){
+        delete();
+    }
+    function delete()  {
+      include("db.php");
+      $sql = "DELETE FROM stagiaires WHERE id='".$_GET['id']."' ";
 
-    // if ($query->num_rows > 0) {
-    // echo "<table><tr><th>Voornaam</th><th>geboorte Datum</th><th>Straat</th><th>Stad</th><th>Postcode</th><th>Telefoon</th></tr>";
-    // // output data of each row
-    // while($row = $query->fetch_assoc()) {
-    //
-    //     echo "<tr><td>" . $row["voornaam"]. "</td><td>" . $row["geboorteDatum"]. " </td><td>" . $row["straat"]. "</td></tr>";
-    // }
-    // echo "</table>";
-    // } else {
-    // echo "0 results";
-    // }
+      if (mysqli_query($con, $sql) === TRUE) {
+        header("Location: APStage.php");
+      } else {
+          echo "Error deleting record: " . $con->error;
+      }
+
+      $con->close();
+    }
 $con->close();
   ?>
     </main>
