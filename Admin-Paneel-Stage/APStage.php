@@ -1,6 +1,5 @@
 <?php
 include("db.php");
-include("APStageBackend.php");
 
 ?>
 
@@ -28,84 +27,86 @@ include("APStageBackend.php");
 
 <!-- De achtergrond staat hier, hij werkt niet in het css bestand -->
 <style>
-    body {
-        background-image: url("images/background.jpg");
-        background-size: 100%;
-        background-repeat: no-repeat;
-    }
-</style>
+      body {
+          background-image: url("images/background.jpg");
+          background-size: 100%;
+          background-repeat: no-repeat;
+      }
+  </style>
 
-</head>
-<body>
+  </head>
+  <body>
 
 
 
-<!-- De header, staat hier onder -->
-<header id="main">
-            <div class="header-content-wrap">
-                <div class="header-deco"></div>
-                    <div class="header-content">
-                        <div>
-                            <nav class="navbar navbar-light shadow" style="background-color: white;">
-                                <a class="navbar-brand" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstleyVEVO">
-                                    <img src="../images/logo-technolab.svg" width="200" height="40" alt="">
-                                </a>
-                                <a class="btn btn-outline-success my-2 my-sm-0" href="LoginFormulier.php">Aanmelden</a>
-                            </nav>
-                        </div>
-                    </div>
-            </div>
-</header>
+  <!-- De header, staat hier onder -->
+  <header id="main">
+              <div class="header-content-wrap">
+                  <div class="header-deco"></div>
+                      <div class="header-content">
+                          <div>
+                              <nav class="navbar navbar-light shadow" style="background-color: white;">
+                                  <a class="navbar-brand" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstleyVEVO">
+                                      <img src="../images/logo-technolab.svg" width="200" height="40" alt="">
+                                  </a>
+                                  <a class="btn btn-outline-success my-2 my-sm-0" href="LoginFormulier.php">Aanmelden</a>
+                              </nav>
+                          </div>
+                      </div>
+              </div>
+  </header>
 
-        <main>
-        <!-- Dit is het formulier zelf, dus waar je alles invult in de browser -->
-    <section>
+          <main>
+          <!-- Dit is het formulier zelf, dus waar je alles invult in de browser -->
+      <section>
 
-  <h1 class="mx-auto">Admin paneel stagiaires login</h1>
+    <h1 class="mx-auto">Admin paneel stagiaires login</h1>
+  <?php
+      ob_start();
+      $query = mysqli_query($con,"SELECT * FROM stagiaires");
+      if ($query->num_rows > 0) {
+      echo '<table class="table table-sm table-dark table-bordered table-hover" style="width : 100%" > <thead>
+      <tr>
+        <th scope="col">Voornaam</th>
+        <th scope="col">Achternaam</th>
+        <th scope="col">Geboorte Datum</th>
+        <th scope="col">Straat</th>
+        <th scope="col">Stad</th>
+        <th scope="col">Postcode</th>
+        <th scope="col">Telefoon</th>
+        <th scope="col">Email</th>
+        <th scope="col">Opleiding</th>
+        <th scope="col">Niveau</th>
+        <th scope="col">Leerjaar</th>
+        <th scope="col">School</th>
+        <th scope="col">Slb-er</th>
+        <th scope="col">Slb Email</th>
+        <th scope="col">Slb Telefoon</th>
+        <th scope="col">DELETE DATA</th>
+        <th scope="col">CHANGE DATA</th>
+        <th scope="col">Download PDF</th>
+      </tr>
+    </thead> <tbody>';
 
-<?php
-    $query = mysqli_query($con,"SELECT * FROM stagiaires");
-    $check = mysqli_num_rows($query);
+      // output data of each row
+      while($row = $query->fetch_assoc()) {
+          echo '<tr>
+              <th scope="row"> '.$row["voornaam"].' </th><td>' .$row["achternaam"]. '</td> <td>'.$row["geboortedatum"].'</td> <td>'.$row["straat"].'</td>
+              <td>'.$row["stad"].'</td> <td>'.$row["postcode"].'</td> <td>'.$row["telefoonnummer"].'</td> <td>'.$row["email"].'</td> <td>'.$row["opleiding"].'</td>
+              <td>'.$row["niveau"].'</td> <td>'.$row["leerjaar"].'</td> <td>'.$row["school"].'</td> <td>'.$row["SLBer"].'</td> <td>'.$row["SLBerTel"].'</td> <td>'.$row["SLBerEmail"].'</td>
+              <form action="APStage.php?id='.$row["ID"].'" method="post">
+                <td><input type="submit" name="Delete" value="Danger" class="btn btn-danger" /></td>
+              </form>
+              <form action="APStageChange.php?id='.$row["ID"].'" method="post">
+                <td><input type="submit" name="Change" value="Change"class="btn btn-info" /></td>
+              </form>
+              <form action="APStageBackend.php?id='.$row["ID"].'" method="post">
+                <td><input type="submit" name="Download" value="Download"class="btn btn-info" /></td>
+              </form>
+            </tr>';
+              }
 
-    if ($query->num_rows > 0) {
-    echo '<table class="table table-sm table-dark table-bordered table-hover" style="width : 100%" > <thead>
-    <tr>
-      <th scope="col">Voornaam</th>
-      <th scope="col">Achternaam</th>
-      <th scope="col">Geboorte Datum</th>
-      <th scope="col">Straat</th>
-      <th scope="col">Stad</th>
-      <th scope="col">Postcode</th>
-      <th scope="col">Telefoon</th>
-      <th scope="col">Email</th>
-      <th scope="col">Opleiding</th>
-      <th scope="col">Niveau</th>
-      <th scope="col">Leerjaar</th>
-      <th scope="col">School</th>
-      <th scope="col">Slb-er</th>
-      <th scope="col">Slb Email</th>
-      <th scope="col">Slb Telefoon</th>
-      <th scope="col">DELETE DATA</th>
-      <th scope="col">CHANGE DATA</th>
-    </tr>
-  </thead> <tbody>';
-
-    // output data of each row
-    while($row = $query->fetch_assoc()) {
-        echo '<tr>
-            <th scope="row"> '.$row["voornaam"].' </th><td>' .$row["achternaam"]. '</td> <td>'.$row["geboortedatum"].'</td> <td>'.$row["straat"].'</td>
-            <td>'.$row["stad"].'</td> <td>'.$row["postcode"].'</td> <td>'.$row["telefoonnummer"].'</td> <td>'.$row["email"].'</td> <td>'.$row["opleiding"].'</td>
-            <td>'.$row["niveau"].'</td> <td>'.$row["leerjaar"].'</td> <td>'.$row["school"].'</td> <td>'.$row["SLBer"].'</td> <td>'.$row["SLBer-tel"].'</td> <td>'.$row["SLBer-email"].'</td>
-            <form action="APStage.php?id='.$row["ID"].'" method="post">
-              <td><input type="submit" name="Delete" value="Danger" class="btn btn-danger" /></td>
-            </form>
-            <form action="APStageChange.php?id='.$row["ID"].'" method="post">
-              <td><input type="submit" name="Change" value="Change"class="btn btn-info" /></td>
-            </form>
-          </tr>';
-            }
-
-    echo "</table>";
+      echo "</table>";
     } else {
     echo "0 results";
     }
@@ -117,7 +118,7 @@ include("APStageBackend.php");
       $sql = "DELETE FROM stagiaires WHERE id='".$_GET['id']."' ";
 
       if (mysqli_query($con, $sql) === TRUE) {
-        header("Location: APStage.php");
+        header("Refresh:0");
       } else {
           echo "Error deleting record: " . $con->error;
       }
@@ -125,7 +126,8 @@ include("APStageBackend.php");
       $con->close();
     }
 $con->close();
-  ?>
+ob_end_flush();
+?>
     </main>
         <footer>
         </footer>

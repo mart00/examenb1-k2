@@ -3,7 +3,6 @@ include("db.php");
 include("APStageBackend.php");
 
 //pak de variables van de link (id en send)
-$a = $_GET['id'];
 
 ?>
 
@@ -58,85 +57,86 @@ $a = $_GET['id'];
         <main>
         <!-- Dit is het formulier zelf, dus waar je alles invult in de browser -->
     <section>
-
-<form method="POST" class="col-lg-9 mx-auto   " id="MainForm" action="APStageBackend.php?id=<?= $a ?>">
+<?php
+  $id = $_GET['id'];
+  $query = mysqli_query($con,"SELECT * FROM stagiaires WHERE id = '".$id."'");
+  $row = $query->fetch_assoc();
+echo '<form method="POST" class="col-lg-9 mx-auto   " id="MainForm" action="APStage.php">
   <h1 class="mx-auto">Stagiaire gegevens aanpassen</h1>
 
   <div class="form-row container-fluid justify-content-center">
     <div class="form-group col-md-3 ">
       <label for="inputvnaam">Voornaam</label>
-      <input class="form-control" type="text" id="fname" name="fname"  placeholder="Dik">
+      <input class="form-control" type="text" id="fname" name="fname"  placeholder="Dik" value="'.$row["voornaam"].'">
     </div>
     <div class="form-group col-md-3">
       <label for="inputanaam">Achternaam</label>
-      <input class="form-control" type="text" id="anaam" name="anaam"  placeholder="Schaap">
+      <input class="form-control" type="text" id="anaam" name="anaam"  placeholder="Schaap" value="'.$row["achternaam"].'">
     </div>
     <div class="form-group col-md-2">
       <label for="inputgebdatum">Geboorte datum</label>
-      <input class="form-control" type="text" id="gebdatum" name="gebdatum"  placeholder="06/06/1966">
+      <input class="form-control" type="date" id="gebdatum" name="gebdatum"  placeholder="06/06/1966" value="'. $row["geboortedatum"] .'">
     </div>
     <div class="form-group col-md-5">
       <label for="inputPassword4">Email</label>
-      <input class="form-control" type="email" id="email" name="email"  placeholder="dikschaap@emailadres.com">
+      <input class="form-control" type="email" id="email" name="email"  placeholder="dikschaap@emailadres.com" value="'. $row["email"]  .'">
     </div>
     <div class="form-group col-md-5">
       <label for="inputPassword4">Telefoonnummer</label>
-      <input class="form-control" type="tel" id="tel" name="tel"  placeholder="06 12345678">
+      <input class="form-control" type="tel" id="tel" name="tel"  placeholder="06 12345678" value="'. $row["telefoonnummer"]  .'">
     </div>
   </div>
   <div class="form-row container-fluid justify-content-center">
     <div class="form-group col-md-5">
       <label for="stad">Stad</label>
-      <input class="form-control" type="text" id="stad" name="stad" requred placeholder=" Hilversum 3">
+      <input class="form-control" type="text" id="stad" name="stad" placeholder=" Hilversum 3" value="'. $row["stad"]  .'">
     </div>
     <div class="form-group col-md-5">
       <label for="straat">Straat</label>
-      <input class="form-control" type="text" id="straat" name="straat" requred placeholder=" Herenweg">
+      <input class="form-control" type="text" id="straat" name="straat" placeholder=" Herenweg" value="'. $row["straat"] .'">
     </div>
     <div class="form-group col-md-2">
       <label for="postcode">postcode</label>
-        <input class="form-control" type="text" id="postcode" name="postcode" requred placeholder=" 2222AA">
+        <input class="form-control" type="text" id="postcode" name="postcode" placeholder=" 2222AA" value="'. $row["postcode"]  .'">
     </div>
   </div>
 
   <div class="form-row container-fluid justify-content-center">
     <div class="form-group col">
       <label for="straat">Opleiding</label>
-      <input class="form-control" type="text" id="Opleiding" name="Opleiding"  placeholder=" Putjeschepper">
+      <input class="form-control" type="text" id="opleiding" name="opleiding"  placeholder=" Putjeschepper" value="'. $row["opleiding"]  .'">
     </div>
     <div class="form-group col">
       <label for="straat">Niveau</label>
-      <input class="form-control" type="number" id="Niveau" name="Niveau"  placeholder=" 3">
+      <input class="form-control" type="number" id="niveau" name="niveau"  placeholder=" 3" value="'. $row["niveau"] .'">
     </div>
     <div class="form-group col">
       <label for="straat">leerjaar</label>
-      <input class="form-control" type="number" id="stagejaar" name="stagejaar"  placeholder=" 1">
+      <input class="form-control" type="number" id="leerjaar" name="leerjaar"  placeholder=" 1" value="'. $row["leerjaar"]  .'">
     </div>
     <div class="form-group col">
       <label for="straat">School</label>
-        <input class="form-control" type="text" id="school" name="school"  placeholder=" MBO Hilversum">
+        <input class="form-control" type="text" id="school" name="school"  placeholder=" MBO Hilversum" value="'. $row["school"] .'">
     </div>
   </div>
   <div class="form-row container-fluid">
     <div class="form-group col">
       <label for="straat">Slb-er</label>
-      <input class="form-control" type="text" id="Slb-er" name="Slb-er"  placeholder=" Gerard Joling">
+      <input class="form-control" type="text" id="Slber" name="Slber"  placeholder=" Gerard Joling" value="'. $row["SLBer"]  .'">
     </div>
     <div class="form-group col">
       <label for="straat">Slb-er Telefoonnummer</label>
-      <input class="form-control" type="tel" id="Slb-ertel" name="Slb-ertel"  placeholder="06 12345678">
+      <input class="form-control" type="tel" id="SlberTel" name="SlberTel"  placeholder="06 12345678" value="'. $row["SLBerTel"]  .'">
     </div>
     <div class="form-group col">
       <label for="straat">Slb-ermail</label>
-      <input class="form-control" type="email" id="Slb-ermail" name="Slb-ermail"  placeholder="Gerard@joling.nl">
+      <input class="form-control" type="email" id="SlberEmail" name="SlberEmail"  placeholder="Gerard@joling.nl" value="'. $row["SLBerEmail"]  .'">
     </div>
   </div>
   <div class="d-flex justify-content-center">
       <button class="SubmitButtonForm" type="submit" name="aanpassen">Aanpassen</button>
   </div>
-    </main>
-        <footer>
-        </footer>
-    </section>
+</form>
+'; ?>
 </body>
 </html>
