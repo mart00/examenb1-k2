@@ -1,21 +1,16 @@
 <?php
+//get database
 include("db.php");
 
 ?>
 
 <html>
 <head>
-  <style>
-  table, th, td {
-      border: 1px solid black;
-  }
-  </style>
+
     <title>Technolab Leiden | Registratie</title>
     <meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Toegevoegde links, hier beneden -->
+  	<meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../css/adminStyle.css">
-    <script type="text/javascript" src="SelectCheck.js"></script>
 
     <!-- Bootstrap links -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
@@ -25,7 +20,6 @@ include("db.php");
 
 
 
-<!-- De achtergrond staat hier, hij werkt niet in het css bestand -->
 <style>
       body {
           background-image: url("images/background.jpg");
@@ -37,9 +31,6 @@ include("db.php");
   </head>
   <body>
 
-
-
-  <!-- De header, staat hier onder -->
   <header id="main">
               <div class="header-content-wrap">
                   <div class="header-deco"></div>
@@ -56,15 +47,19 @@ include("db.php");
               </div>
   </header>
 
-          <main>
-          <!-- Dit is het formulier zelf, dus waar je alles invult in de browser -->
+      <main>
       <section>
 
     <h1 class="mx-auto">Admin paneel stagiaires login</h1>
+  <!-- php code voor het maken en het invullen van de tabel -->
   <?php
+  //start een buffer waardoor de header(); functie stopt met de "cannont modify header information" error weer te geven
       ob_start();
+      //selecteer alle data van stagiaires
       $query = mysqli_query($con,"SELECT * FROM stagiaires");
+      //kijk of er data bestaat
       if ($query->num_rows > 0) {
+      //maak de tabel en headers
       echo '<table class="table table-sm table-dark table-bordered table-hover" style="width : 100%" > <thead>
       <tr>
         <th scope="col">Voornaam</th>
@@ -88,13 +83,14 @@ include("db.php");
       </tr>
     </thead> <tbody>';
 
-      // output data of each row
+      // while their still is data from the query
       while($row = $query->fetch_assoc()) {
+        //fill the table with the data from the query and add buttons for deleting, changing and downloading a pdf.
           echo '<tr>
               <th scope="row"> '.$row["voornaam"].' </th><td>' .$row["achternaam"]. '</td> <td>'.$row["geboortedatum"].'</td> <td>'.$row["straat"].'</td>
               <td>'.$row["stad"].'</td> <td>'.$row["postcode"].'</td> <td>'.$row["telefoonnummer"].'</td> <td>'.$row["email"].'</td> <td>'.$row["opleiding"].'</td>
               <td>'.$row["niveau"].'</td> <td>'.$row["leerjaar"].'</td> <td>'.$row["school"].'</td> <td>'.$row["SLBer"].'</td> <td>'.$row["SLBerTel"].'</td> <td>'.$row["SLBerEmail"].'</td>
-              <form action="APStage.php?id='.$row["ID"].'" method="post">
+              <form action="APStageBackend.php?id='.$row["ID"].'" method="post">
                 <td><input type="submit" name="Delete" value="Danger" class="btn btn-danger" /></td>
               </form>
               <form action="APStageChange.php?id='.$row["ID"].'" method="post">
@@ -109,21 +105,6 @@ include("db.php");
       echo "</table>";
     } else {
     echo "0 results";
-    }
-    if($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['Delete'])){
-        delete();
-    }
-    function delete()  {
-      include("db.php");
-      $sql = "DELETE FROM stagiaires WHERE id='".$_GET['id']."' ";
-
-      if (mysqli_query($con, $sql) === TRUE) {
-        header("Refresh:0");
-      } else {
-          echo "Error deleting record: " . $con->error;
-      }
-
-      $con->close();
     }
 $con->close();
 ob_end_flush();

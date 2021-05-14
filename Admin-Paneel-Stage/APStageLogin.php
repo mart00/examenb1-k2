@@ -45,7 +45,7 @@ include("APStageBackend.php");
                             <nav class="navbar navbar-light shadow" style="background-color: white;">
                                 <a class="navbar-brand" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstleyVEVO">
                                     <img src="../images/logo-technolab.svg" width="200" height="40" alt="">
-                                </a>  
+                                </a>
                                 <a class="btn btn-outline-success my-2 my-sm-0" href="LoginFormulier.php">Aanmelden</a>
                             </nav>
                         </div>
@@ -56,19 +56,19 @@ include("APStageBackend.php");
         <main>
         <!-- Dit is het formulier zelf, dus waar je alles invult in de browser -->
     <section>
-
+<!-- formulier die naar APStageBackend leidt-->
 <form method="POST" class="col-lg-9 mx-auto" id="MainForm" action="APStageBackend.php">
   <h1 class="mx-auto">Admin paneel stagiaires login</h1>
-
+  <!-- div met de inputs voo wachtwoord en username-->
     <div class="form-row col-md-4">
       <label for="username">Username</label>
       <input class="form-control" type="text" id="Username" name="username"  placeholder="Username" required>
       <label for="password">Password</label>
       <input class="form-control" type="text" id="password" name="password"  placeholder="Password" required>
     </div>
-
+<!-- submit button met de naam -->
   <div class="d-flex justify-content-center">
-      <button class="SubmitButtonForm" type="submit" name="submit">Submit</button>
+      <button class="SubmitButtonForm" type="submit" name="login">Submit</button>
   </div>
 <form>
     </main>
