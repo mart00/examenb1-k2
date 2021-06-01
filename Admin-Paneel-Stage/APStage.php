@@ -31,12 +31,12 @@ include("db.php");
   </head>
   <body>
 
-  <header id="main">
+  <header id="main" class="w-100">
               <div class="header-content-wrap">
                   <div class="header-deco"></div>
                       <div class="header-content">
                           <div>
-                              <nav class="navbar navbar-light shadow" style="background-color: white;">
+                              <nav class="navbar navbar-light shadow w-100" style="background-color: white;">
                                   <a class="navbar-brand" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstleyVEVO">
                                       <img src="../images/logo-technolab.svg" width="200" height="40" alt="">
                                   </a>
@@ -50,7 +50,7 @@ include("db.php");
       <main>
       <section>
 
-    <h1 class="mx-auto">Admin paneel stagiaires login</h1>
+    <h1 class="mx-center text-center">Admin paneel stagiaires</h1>
   <!-- php code voor het maken en het invullen van de tabel -->
   <?php
   //start een buffer waardoor de header(); functie stopt met de "cannont modify header information" error weer te geven
@@ -60,7 +60,7 @@ include("db.php");
       //kijk of er data bestaat
       if ($query->num_rows > 0) {
       //maak de tabel en headers
-      echo '<table class="table table-sm table-dark table-bordered table-hover" style="width : 100%" > <thead>
+      echo '<table class="table table-sm table-dark table-bordered" w-75> <thead>
       <tr>
         <th scope="col">Voornaam</th>
         <th scope="col">Achternaam</th>

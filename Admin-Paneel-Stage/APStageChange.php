@@ -62,8 +62,8 @@ include("APStageBackend.php");
   $query = mysqli_query($con,"SELECT * FROM stagiaires WHERE id = '".$_GET['id']."'");
   //zet alle values van $query in $row
   $row = $query->fetch_assoc();
-  //maak een formulier die automatisch de data ingevuld heeft van de juiste stagiare.
-echo '<form method="POST" class="col-lg-9 mx-auto   " id="MainForm" action="APStage.php">
+  //maak een formulier die automatisch de data ingevuld heeft van de juiste stagiar
+echo '<form method="POST" class="col-lg-9 mx-auto   " id="MainForm" action="APStageBackend.php?id='.$row["ID"].'">
   <h1 class="mx-auto">Stagiaire gegevens aanpassen</h1>
 
   <div class="form-row container-fluid justify-content-center">

@@ -23,6 +23,7 @@ if(isset($_POST['login'])){
 }
 //code voor het aanpassen van de gegevens in de database
 if(isset($_POST['aanpassen'])){
+  echo "string";
     //get de ingevulde values van het formulier en maak ze mysqli veilig
     $naam = mysqli_real_escape_string($con,$_POST['fname']);
     $anaam = mysqli_real_escape_string($con,$_POST['anaam']);
@@ -45,9 +46,9 @@ if(isset($_POST['aanpassen'])){
     postcode = '".$postcode."', telefoonnummer = '".$tel."', email = '".$email."', opleiding = '".$opleiding."', niveau = '".$niveau."', leerjaar = '".$leerjaar."',
     school = '".$school."', SLBer = '".$SLBer."', SLBerTel = '".$Stel."', SLBerEmail = '".$Smail."' WHERE id = '".$_GET['id']."' ";
     //pas de gegevens aan als de query werkt en ga dan terug naar APStage.php anders geef error weer
-    if (mysqli_query($con,$sql)) {
+    if (mysqli_query($con,$sql) === TRUE) {
       header("Location: APStage.php");
-    } else{
+    } else {
        echo "Error updating record: " . $con->error;
     }
 }
