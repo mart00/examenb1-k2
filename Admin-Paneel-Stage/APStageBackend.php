@@ -15,8 +15,7 @@ if(isset($_POST['login'])){
     var_dump($passwordHashed);
 
     //pak alle data van de admin paneel die de juiste gebruikersnaam en wachtwoord hebben
-    $va = '$2y$10$LOL/roP.4sP5OOBUboWir.rv47eynwbQKH7BWF18xvwQhYw1GMd.O';
-    if (password_verify($password,$passwordHashed)) {
+    if (password_verify($password,$data["Wachtwoord"])) {
       header("Location: www.hahah.php");
       echo "string";
     }
