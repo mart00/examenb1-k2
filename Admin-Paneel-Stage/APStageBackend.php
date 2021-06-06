@@ -6,20 +6,34 @@ include("db.php");
 if(isset($_POST['login'])){
     //get de ingevulde values van het formulier en maak ze mysqli veilig
     $password= mysqli_real_escape_string($con,$_POST['password']);
+    $passwordHashed = password_hash($password, PASSWORD_DEFAULT);
     $username = mysqli_real_escape_string($con,$_POST['username']);
+
+    $wowAnotherQuery = mysqli_query($con,"SELECT Wachtwoord FROM admin WHERE Gebruikersnaam = '".$username."'");
+    $data = $wowAnotherQuery->fetch_assoc();
+
+    var_dump($passwordHashed);
+
     //pak alle data van de admin paneel die de juiste gebruikersnaam en wachtwoord hebben
+    $va = '$2y$10$LOL/roP.4sP5OOBUboWir.rv47eynwbQKH7BWF18xvwQhYw1GMd.O';
+    if (password_verify($password,$passwordHashed)) {
+      header("Location: www.hahah.php");
+      echo "string";
+    }
+    echo $data["Wachtwoord"];
+    echo "<br>". $passwordHashed;
     $query = mysqli_query($con,"SELECT * FROM admin WHERE Gebruikersnaam = '".$username."' AND Wachtwoord = '".$password."' ");
     //makes sure that mysqli reports the errors in full detail
     mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
     //als er geen rije zijn van de query geef error weer anders ga naar de apstage pagina.
-    if(!mysqli_num_rows($query)) {
-        mysqli_error($con);
-        header("Location: APStageLogin.php");
-    } else {
-      session_start();
-      $_SESSION["loggedin"] = TRUE;
-      header("Location: APstage.php");
-    }
+    // if(!mysqli_num_rows($query)) {
+    //     mysqli_error($con);
+    //     header("Location: APStageLogin.php");
+    // } else {
+    //   session_start();
+    //   $_SESSION["loggedin"] = TRUE;
+    //   header("Location: APstage.php");
+    // }
 }
 //code voor het aanpassen van de gegevens in de database
 if(isset($_POST['aanpassen'])){
