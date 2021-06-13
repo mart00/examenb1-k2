@@ -60,36 +60,44 @@ include("db.php");
       //kijk of er data bestaat
       if ($query->num_rows > 0) {
       //maak de tabel en headers
-      echo '<table class="table table-sm table-dark table-bordered" w-75> <thead>
-      <tr>
-        <th scope="col">Voornaam</th>
-        <th scope="col">Achternaam</th>
-        <th scope="col">Geboorte Datum</th>
-        <th scope="col">Straat</th>
-        <th scope="col">Stad</th>
-        <th scope="col">Postcode</th>
-        <th scope="col">Telefoon</th>
-        <th scope="col">Email</th>
-        <th scope="col">Opleiding</th>
-        <th scope="col">Niveau</th>
-        <th scope="col">Leerjaar</th>
-        <th scope="col">School</th>
-        <th scope="col">Slb-er</th>
-        <th scope="col">Slb Email</th>
-        <th scope="col">Slb Telefoon</th>
-        <th scope="col">DELETE DATA</th>
-        <th scope="col">CHANGE DATA</th>
-        <th scope="col">Download PDF</th>
-      </tr>
-    </thead> <tbody>';
-
+        echo '
+        <div class"table-responsive">
+          <table class="table table-sm table-hover table-bordered">
+            <thead>
+              <tr>
+                <th class="w-12">Voornaam</th>
+                <th>Achternaam</th>
+                <th>Geboorte Datum</th>
+                <th>Straat</th>
+                <th>Stad</th>
+                <th>Postcode</th>
+                <th>Telefoon</th>
+                <th>Email</th>
+                <th>Opleiding</th>
+                <th>Niveau</th>
+                <th>Leerjaar</th>
+                <th>School</th>
+                <th>DELETE DATA</th>
+                <th>CHANGE DATA</th>
+                <th>Download PDF</th>
+              </tr>
+            </thead>
+            <tbody>';
+            // <th style="width:1%">Slb-er</th>
+            // <th style="width:1%">Slb Email</th>
+            // <th style="width:1%">Slb Telefoon</th>
+            // <td>'.$row["SLBer"].'</td> <td>'.$row["SLBerTel"].'</td> <td>'.$row["SLBerEmail"].'</td>
       // while their still is data from the query
       while($row = $query->fetch_assoc()) {
         //fill the table with the data from the query and add buttons for deleting, changing and downloading a pdf.
-          echo '<tr>
-              <th scope="row"> '.$row["voornaam"].' </th><td>' .$row["achternaam"]. '</td> <td>'.$row["geboortedatum"].'</td> <td>'.$row["straat"].'</td>
-              <td>'.$row["stad"].'</td> <td>'.$row["postcode"].'</td> <td>'.$row["telefoonnummer"].'</td> <td>'.$row["email"].'</td> <td>'.$row["opleiding"].'</td>
-              <td>'.$row["niveau"].'</td> <td>'.$row["leerjaar"].'</td> <td>'.$row["school"].'</td> <td>'.$row["SLBer"].'</td> <td>'.$row["SLBerTel"].'</td> <td>'.$row["SLBerEmail"].'</td>
+        $theBestSolution = explode("@",$row["email"]);
+          echo '
+
+            <tr>
+              <td> '.$row["voornaam"].' </td><td>' .$row["achternaam"]. '</td> <td>'.$row["geboortedatum"].'</td> <td>'.$row["straat"].'</td>
+              <td>'.$row["stad"].'</td> <td>'.$row["postcode"].'</td> <td>'.$row["telefoonnummer"].'</td>
+               <td>'.$theBestSolution[0].'@<br>'.$theBestSolution[1].'</td> <td>'.$row["opleiding"].'</td>
+              <td>'.$row["niveau"].'</td><td>'.$row["leerjaar"].'</td> <td>'.$row["school"].'</td>
               <form action="APStageBackend.php?id='.$row["ID"].'" method="post">
                 <td><input type="submit" name="Delete" value="Danger" class="btn btn-danger" /></td>
               </form>
@@ -100,9 +108,8 @@ include("db.php");
                 <td><input type="submit" name="Download" value="Download"class="btn btn-info" /></td>
               </form>
             </tr>';
-              }
-
-      echo "</table>";
+      }
+      echo '</tbody></table></div>';
     } else {
     echo "0 results";
     }
