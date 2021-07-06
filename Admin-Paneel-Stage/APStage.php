@@ -1,7 +1,43 @@
 <?php
 //get database
 include("db.php");
-
+//pak de info van de link (info)
+$c = $_GET['info'];
+//kijk wat voor informatie de link heeft meegegeven en geef een message weer
+switch ($c) {
+  case 'link':
+    echo "Deze link is al eerder gebruikt.";
+  break;
+  case 'failure':
+    echo "Er is iets fout gegaan.";
+  break;
+  case 'ja':
+    echo "Uw hebt zichzelf al geregistreerd.";
+  break;
+  case 'success':
+      echo "Uw heeft zich geregistreerd.";
+  break;
+  case 'nee':
+  break;
+  case 'wachtwoord':
+    echo "Verkeerd wachtwoord.";
+    break;
+  case 'aanpassen':
+    echo "Gegevens aangepast";
+    break;
+  case 'delete':
+    echo "Gegevens verwijderd";
+    break;
+  case 'mail':
+    echo "Registratie mail(s) verzonden.";
+    break;
+  case 'excelError':
+    echo "Verkeerde file type gelieve een xlsx bestand door te geven";
+    break;
+  default:
+    echo "Er is iets fout gegaan.";
+    break;
+}
 ?>
 
 <html>
@@ -17,7 +53,13 @@ include("db.php");
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-
+    <script>
+    //pop up alert for excel sheet
+function myFunction()
+{
+alert("Gelieve de email adress van stagiaires volledig links te plaatsen. Houd (in excel) l-shift ingedrukt terwijl je op de (groene) rand van de kolom klikt en die volledig naar links sleept."); // this is the message in ""
+}
+</script>
 
 
 <style>
@@ -40,7 +82,12 @@ include("db.php");
                                   <a class="navbar-brand" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstleyVEVO">
                                       <img src="../images/logo-technolab.svg" width="200" height="40" alt="">
                                   </a>
-                                  <a class="btn btn-outline-success my-2 my-sm-0" href="LoginFormulier.php">Aanmelden</a>
+                                  <form enctype="multipart/form-data" action="APStageBackend.php" method="post" enctype = "multipart/form-data">
+                                    <!-- <input class="form-control" type="email" id="email" name="email" placeholder="email"> -->
+
+                                    <input type="file" name="uploadedsheet" id="uploadedsheet" required>
+                                    <td><input onclick="myFunction()" type="submit" name="registratie" value="Registratie mail" class="btn btn-outline-success my-2 my-sm-0"/></td>
+                                  </form>
                               </nav>
                           </div>
                       </div>
